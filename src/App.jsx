@@ -8,10 +8,11 @@ import axios from 'axios';
 
 function App() {
   const [question, setQuestion] = useState("");
-  const [responseData, setResponseData] = useState(null); // State to store the response data
+  const [responseData, setResponseData] = useState(""); // State to store the response data
 
   async function generateResponse() {
-    console.log("Generating response...");
+    // console.log("Generating response...");
+    setResponseData("Genearting answer"); // Set the response data to "Generating answer"
     const apiKey = import.meta.env.VITE_API_KEY; // Access the API key 
      const url_gemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`; // Use template literals for the URL
 
@@ -28,8 +29,7 @@ function App() {
           }]
         }
       });
-      console.log(response['data']['candidates'][0]['content']['parts'][0]['text']); // Log the response data
-      // setResponseData(response.data); // Store the response data in state
+      setResponseData(response['data']['candidates'][0]['content']['parts'][0]['text']); // Log the response data
     } catch (error) {
       console.error('Error fetching data:', error); // Handle errors
     }
@@ -49,6 +49,8 @@ function App() {
           <pre>{JSON.stringify(responseData, null, 2)}</pre> {/* Display the response data */}
         </div>
       )}
+
+      <p>{responseData}</p>
     </>
   );
 }

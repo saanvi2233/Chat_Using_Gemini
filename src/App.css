@@ -79,3 +79,48 @@ pre {
   overflow-x: auto;
   white-space: pre-wrap; /* Allows wrapping of long lines */
 }
+
+p {
+  margin-top: 20px;
+  font-size: 16px;
+  color: #333;
+  text-align: center;
+}
+/* Response.css */
+
+.response-container {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #ffffff; /* White background for clarity */
+  border: 1px solid #e0e0e0; /* Light gray border for subtle separation */
+  border-radius: 8px; /* Rounded corners for a modern look */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  transition: transform 0.2s; /* Smooth transition for hover effect */
+}
+
+.response-container:hover {
+  transform: scale(1.02); /* Slightly enlarge on hover */
+}
+
+h2 {
+  margin: 0 0 10px; /* Space below the heading */
+  color: #333; /* Dark color for the heading */
+  font-size: 1.5em; /* Larger font size for emphasis */
+}
+
+pre {
+  background-color: #f8f9fa; /* Light gray background for code */
+  padding: 10px; /* Padding for better readability */
+  border-radius: 5px; /* Rounded corners for the code block */
+  overflow-x: auto; /* Allow horizontal scrolling for long lines */
+  white-space: pre-wrap; /* Wrap long lines */
+  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
+  color: #212529; /* Darker text color for contrast */
+}
+
+p {
+  margin-top: 15px; /* Space above the paragraph */
+  font-size: 1em; /* Standard font size */
+  color: #555; /* Medium gray for the paragraph text */
+  text-align: left; /* Align text to the left */
+}
