@@ -1,126 +1,139 @@
 /* App.css */
 
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
-  margin: 0;
-  padding: 20px;
+/* General App Container */
+.app-container {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
-  height: 100vh;
+  width: 90%; /* Slightly wider */
+  max-width: 900px; /* Increased max-width */
+  margin: 40px auto; /* More top/bottom margin */
+  background-color: #f8f8f8; /* Light gray background */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+  padding: 30px; /* More padding */
 }
 
-h1 {
-  color: #333;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-textarea {
+/* Chat Container */
+.chat-container {
   width: 100%;
-  max-width: 600px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
-  resize: none;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: border-color 0.3s;
+  height: 500px; /* Increased height */
+  overflow-y: auto;
+  border: 1px solid #e0e0e0; /* Lighter border */
+  padding: 20px; /* More padding */
+  margin-bottom: 20px; /* More margin */
+  border-radius: 12px; /* More rounded corners */
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Increased gap */
+  background-color: #fff; /* White background */
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle inner shadow */
 }
 
-textarea:focus {
-  border-color: #007bff;
+/* Message Bubbles */
+.message {
+  padding: 15px 20px; /* More padding */
+  border-radius: 20px; /* More rounded corners */
+  max-width: 80%; /* Slightly wider */
+  word-wrap: break-word;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  transition: all 0.2s ease-in-out;
+}
+
+.message:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+/* User Message */
+.user {
+  background-color: #e0f2f7; /* Light blue */
+  align-self: flex-end;
+  color: #333;
+}
+
+/* Bot Message */
+.bot {
+  background-color: #f0f0f0; /* Light gray */
+  align-self: flex-start;
+  color: #333;
+}
+
+/* Input Area */
+.input-area {
+  display: flex;
+  width: 100%;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.input-area textarea {
+  flex-grow: 1;
+  padding: 15px; /* More padding */
+  border: none; /* Remove border */
+  border-radius: 12px 0 0 12px; /* Rounded corners on the left */
+  resize: none;
+  font-family: inherit;
+  font-size: 1rem;
   outline: none;
 }
 
-button {
-  display: block;
-  width: 100%;
-  max-width: 200px;
-  padding: 10px;
-  margin: 20px auto;
-  background-color: #007bff;
+.input-area button {
+  padding: 15px 25px; /* More padding */
+  background-color: #2979ff; /* Blue */
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 16px;
+  border-radius: 0 12px 12px 0; /* Rounded corners on the right */
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.2s;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-2px);
+.input-area button:hover {
+  background-color: #1e60c9; /* Darker blue */
 }
 
-button:active {
-  transform: translateY(0);
-}
+/* Response.css (Improved) */
 
 .response-container {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-h2 {
-  margin: 0 0 10px;
-  color: #333;
-}
-
-pre {
-  background-color: #f8f9fa;
-  padding: 10px;
-  border-radius: 5px;
-  overflow-x: auto;
-  white-space: pre-wrap; /* Allows wrapping of long lines */
-}
-
-p {
-  margin-top: 20px;
-  font-size: 16px;
-  color: #333;
-  text-align: center;
-}
-/* Response.css */
-
-.response-container {
-  margin-top: 20px;
-  padding: 15px;
-  background-color: #ffffff; /* White background for clarity */
-  border: 1px solid #e0e0e0; /* Light gray border for subtle separation */
-  border-radius: 8px; /* Rounded corners for a modern look */
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
-  transition: transform 0.2s; /* Smooth transition for hover effect */
+  margin-top: 30px; /* More margin */
+  padding: 25px; /* More padding */
+  background-color: #fff; /* White background */
+  border: 1px solid #e0e0e0; /* Light gray border */
+  border-radius: 12px; /* More rounded corners */
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1); /* Stronger shadow */
+  transition: all 0.3s ease-in-out;
 }
 
 .response-container:hover {
-  transform: scale(1.02); /* Slightly enlarge on hover */
+  transform: translateY(-2px) scale(1.01); /* More noticeable hover effect */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 h2 {
-  margin: 0 0 10px; /* Space below the heading */
-  color: #333; /* Dark color for the heading */
-  font-size: 1.5em; /* Larger font size for emphasis */
+  margin: 0 0 15px; /* More space below the heading */
+  color: #222; /* Darker color for the heading */
+  font-size: 1.8em; /* Larger font size */
+  font-weight: 600;
 }
 
 pre {
-  background-color: #f8f9fa; /* Light gray background for code */
-  padding: 10px; /* Padding for better readability */
-  border-radius: 5px; /* Rounded corners for the code block */
-  overflow-x: auto; /* Allow horizontal scrolling for long lines */
-  white-space: pre-wrap; /* Wrap long lines */
-  font-family: 'Courier New', Courier, monospace; /* Monospace font for code */
-  color: #212529; /* Darker text color for contrast */
+  background-color: #f5f5f5; /* Very light gray */
+  padding: 15px; /* More padding */
+  border-radius: 8px; /* Rounded corners */
+  overflow-x: auto;
+  white-space: pre-wrap;
+  font-family: 'Menlo', 'Courier New', Courier, monospace; /* More modern monospace font */
+  color: #333; /* Darker text color */
+  line-height: 1.6;
+  border: 1px solid #ddd;
 }
 
 p {
-  margin-top: 15px; /* Space above the paragraph */
-  font-size: 1em; /* Standard font size */
-  color: #555; /* Medium gray for the paragraph text */
-  text-align: left; /* Align text to the left */
+  margin-top: 20px; /* More space above the paragraph */
+  font-size: 1.1em; /* Slightly larger font size */
+  color: #444; /* Darker gray */
+  text-align: left;
+  line-height: 1.6;
 }

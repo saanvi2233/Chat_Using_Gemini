@@ -1,57 +1,103 @@
-import { useState } from 'react';
-import reactLogo from './assets/react.svg';
-import viteLogo from '/vite.svg';
+import { useState, useEffect, useRef } from 'react';
 import './App.css';
-
-// Axios is used for API calls
 import axios from 'axios';
 
 function App() {
-  const [question, setQuestion] = useState("");
-  const [responseData, setResponseData] = useState(""); // State to store the response data
+  const [question, setQuestion] = useState('');
+  const [chatHistory, setChatHistory] = useState([]);
+  const chatContainerRef = useRef(null);
 
-  async function generateResponse() {
-    // console.log("Generating response...");
-    setResponseData("Genearting answer"); // Set the response data to "Generating answer"
-    const apiKey = import.meta.env.VITE_API_KEY; // Access the API key 
-     const url_gemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`; // Use template literals for the URL
+  useEffect(() => {
+    // Scroll to the bottom of the chat container whenever the chat history updates
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
+  }, [chatHistory]);
+
+  const generateResponse = async () => {
+    if (question.trim() === '') return; // Don't send empty messages
+
+    // Add user's question to chat history
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { role: 'user', content: question },
+    ]);
+
+    setQuestion(''); // Clear the input field
+
+    // Add a temporary "Generating answer" message
+    setChatHistory((prevHistory) => [
+      ...prevHistory,
+      { role: 'bot', content: 'Generating answer...' },
+    ]);
+
+    const apiKey = import.meta.env.VITE_API_KEY;
+    const url_gemini = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
     try {
       const response = await axios({
         url: url_gemini,
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json', // Set the content type to JSON
+          'Content-Type': 'application/json',
         },
         data: {
-          "contents": [{
-            "parts": [{ "text":question }] // Use the question state variable
-          }]
-        }
+          contents: [{ parts: [{ text: question }] }],
+        },
       });
-      setResponseData(response['data']['candidates'][0]['content']['parts'][0]['text']); // Log the response data
+
+      const botResponse =
+        response.data.candidates[0].content.parts[0].text;
+
+      // Replace "Generating answer" with the actual response
+      setChatHistory((prevHistory) => {
+        const newHistory = [...prevHistory];
+        newHistory[newHistory.length - 1].content = botResponse;
+        return newHistory;
+      });
     } catch (error) {
-      console.error('Error fetching data:', error); // Handle errors
+      console.error('Error fetching data:', error);
+      // Replace "Generating answer" with an error message
+      setChatHistory((prevHistory) => {
+        const newHistory = [...prevHistory];
+        newHistory[newHistory.length - 1].content =
+          'Error generating response. Please try again.';
+        return newHistory;
+      });
     }
-  }
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter' && !event.shiftKey) {
+      event.preventDefault();
+      generateResponse();
+    }
+  };
 
   return (
-    <>
-    
+    <div className="app-container">
       <h1>Chat AI</h1>
-      <textarea value={question} 
-      onChange={(e)=>setQuestion(e.target.value)} // Update the question state
-      cols="30" rows="10" placeholder="Ask me anything" />
-      <button onClick={generateResponse}>Generate Ans</button>
-      {responseData && (
-        <div>
-          <h2>Response:</h2>
-          <pre>{JSON.stringify(responseData, null, 2)}</pre> {/* Display the response data */}
-        </div>
-      )}
-
-      <p>{responseData}</p>
-    </>
+      <div className="chat-container" ref={chatContainerRef}>
+        {chatHistory.map((message, index) => (
+          <div
+            key={index}
+            className={`message ${message.role === 'user' ? 'user' : 'bot'}`}
+          >
+            {message.content}
+          </div>
+        ))}
+      </div>
+      <div className="input-area">
+        <textarea
+          value={question}
+          onChange={(e) => setQuestion(e.target.value)}
+          placeholder="Ask me anything"
+          onKeyDown={handleKeyPress}
+          rows={1}
+        />
+        <button onClick={generateResponse}>Send</button>
+      </div>
+    </div>
   );
 }
 
